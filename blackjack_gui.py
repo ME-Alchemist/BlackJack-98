@@ -38,6 +38,16 @@ play_lose = lambda: sfx.PlaySound("resources/sounds/CHORD.wav", sfx.SND_ASYNC)
 play_win = lambda: sfx.PlaySound("resources/sounds/TADA.wav", sfx.SND_ASYNC)
 
 def check_player():
+
+    card = game.takeACard(deck)
+    card_img = game.load_single_card_image(card)
+    player.append(card)
+    photo_player.append(card_img)
+    pack_card_img = tk.Label(player_card_frame, image=card_img, bg=background)
+    pack_card_img.pack(side="left")  
+    print(f"Player's hand: {player}")
+    playerInt.set(game.count_total(player))
+
     if game.count_total(player) < 21:
         return
     elif game.count_total(player) > 21:
@@ -64,17 +74,17 @@ def player_stays():
         messagebox.showinfo("You lose!", "Dealer wins!")
         play_lose()
 
+# Previous solution
+# list_of_lambda_commands = [
+#     lambda: player.append(game.takeACard(deck)), 
+#     lambda: print(f"Player's hand: {player}"), 
+#     lambda: playerInt.set(game.count_total(player)),
+#     lambda: check_player()
+#     ]
 
-list_of_lambda_commands = [
-    lambda: player.append(game.takeACard(deck)), 
-    lambda: print(f"Player's hand: {player}"), 
-    lambda: playerInt.set(game.count_total(player)),
-    lambda: check_player()
-    ]
-
-def run_all():
-    for func in list_of_lambda_commands:
-        func()
+# def run_all():
+#     for func in list_of_lambda_commands:
+#         func()
 
 print(f"Player's hand: {player}")
 print(f"Dealer's hand: {dealer}")
@@ -102,10 +112,11 @@ main_window.config(menu=menubar)
 
 
 # load card images
-photo_player = game.load_card_image(player)
-photo_dealer = game.load_card_image(dealer)
+photo_player = game.load_card_images(player)
+photo_dealer = game.load_card_images(dealer)
 
 
+# Create frames, windows
 dealer_frame = tk.LabelFrame(main_window, 
                              width=630, 
                              height=160, 
@@ -166,7 +177,7 @@ for img in photo_dealer:
 
 btn_frame = tk.Frame(main_window, width=200, height=50, bg=background)
 btn_frame.pack()
-hit_btn = tk.Button(btn_frame, text="Hit me!", relief="raised", command=lambda: run_all())
+hit_btn = tk.Button(btn_frame, text="Hit me!", relief="raised", command=check_player)
 hit_btn.pack(side="left", padx=10)
 stay_btn = tk.Button(btn_frame, text="Stay", relief="raised", command=lambda: messagebox.showinfo("Stay", "You chose to stay"))
 stay_btn.pack()

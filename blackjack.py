@@ -1,10 +1,11 @@
 from PIL import Image, ImageTk
 
-card1ls = [{'Suit': '♥', 'value': 8, 'l': 71, 't': 0, 'r': 142, 'b': 96},
-           {'Suit': '♥', 'value': 8, 'l': 0, 't': 0, 'r': 71, 'b': 96}
+card1ls = [
+           {'Suit': '♥', 'value': 8, 'l': 0, 't': 0, 'r': 71, 'b': 96},
+           {'Suit': '♥', 'value': 8, 'l': 355, 't': 192, 'r': 426, 'b': 288}
            ]
 
-def load_card_image(hand):
+def load_card_images(hand):
     #  load up spritesheet
     photo_images = []
     for card in hand:
@@ -19,8 +20,24 @@ def load_card_image(hand):
         img = ImageTk.PhotoImage(img)
         # return a list of tkinter PhotoImage objects
         photo_images.append(img)
-        # card_width, card_height =  71, 96
+        
     return photo_images
+
+
+def load_single_card_image(card):
+#  load up spritesheet
+    left = card["l"]
+    top = card["t"]
+    right = card["r"]
+    bottom = card["b"]
+
+    img_path = "resources/images/spritesheet.png"
+    img = Image.open(img_path)
+    img = img.crop((left, top, right, bottom))
+    photo_img = ImageTk.PhotoImage(img)
+    
+    return photo_img
+
 
 
 # Create a Card class to represent each card in the deck
@@ -100,7 +117,9 @@ def dealer_cards(deck):
 
 # pick a card from the shuffled deck
 def takeACard(listofcards):
-    return listofcards.pop()
+    drawn_card = listofcards.pop()
+    return drawn_card
+
 
 
 '''
@@ -131,13 +150,15 @@ def count_total(hand):
             case _:
                 total += card["value"]
 
-    if ace_count >= 2:
-        for i in range(1, ace_count):
-            total -= 10
-    elif ace_count == 1 and total > 21:
+    while total > 21 and ace_count >= 1:
         total -= 10
-                            
+        ace_count -= 1
+                        
     return total
+
+
+
+
 
 if __name__ == "__main__":
     # player_hand, dealer_hand = [], []
@@ -148,7 +169,7 @@ if __name__ == "__main__":
     print(f"Dealer's hand: {dealer_hand}")
     print(count_total(player_hand))
     print(count_total(dealer_hand))
-    print(load_card_image(card1ls))
+    print(load_card_images(card1ls))
 
     # crop out a single card for testing
     # a single cropped out is 71x96 pixels
