@@ -1,9 +1,15 @@
 from PIL import Image, ImageTk
+import random as rand
 
 card1ls = [
            {'Suit': '♥', 'value': 8, 'l': 0, 't': 0, 'r': 71, 'b': 96},
            {'Suit': '♥', 'value': 8, 'l': 355, 't': 192, 'r': 426, 'b': 288}
            ]
+
+random_int = rand.randint(1, 12)
+random_left = 71 * random_int
+# face_down_cards = {'Suit': '♥', 'value': 8, 'l': 710, 't': 384, 'r': 781, 'b': 480}
+face_down_cards = {'Suit': '♥', 'value': 8, 'l': random_left, 't': 384, 'r': random_left + 71, 'b': 480}
 
 def load_card_images(hand):
     #  load up spritesheet
@@ -37,6 +43,7 @@ def load_single_card_image(card):
     photo_img = ImageTk.PhotoImage(img)
     
     return photo_img
+    # return img.show()
 
 
 
@@ -162,14 +169,15 @@ def count_total(hand):
 
 if __name__ == "__main__":
     # player_hand, dealer_hand = [], []
-    shuffled_deck = generate_game()
-    player_hand = player_cards(shuffled_deck)
-    dealer_hand = dealer_cards(shuffled_deck)
-    print(f"Player's hand: {player_hand}")
-    print(f"Dealer's hand: {dealer_hand}")
-    print(count_total(player_hand))
-    print(count_total(dealer_hand))
-    print(load_card_images(card1ls))
+    # shuffled_deck = generate_game()
+    # player_hand = player_cards(shuffled_deck)
+    # dealer_hand = dealer_cards(shuffled_deck)
+    # print(f"Player's hand: {player_hand}")
+    # print(f"Dealer's hand: {dealer_hand}")
+    # print(count_total(player_hand))
+    # print(count_total(dealer_hand))
+    # print(load_card_images(card1ls))
+    load_single_card_image(face_down_cards)
 
     # crop out a single card for testing
     # a single cropped out is 71x96 pixels

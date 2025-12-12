@@ -1,15 +1,20 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import messagebox, PhotoImage
+from tkinter import messagebox
 import tkinter.ttk as ttk
 import blackjack as game
 import winsound as sfx
 import os
 
+
+
 deck = game.generate_game()
 player = game.player_cards(deck)
 dealer = game.dealer_cards(deck)
 background = "#008000"
+
+player_stays = False
+
 
 def reset():
     global deck, player, dealer
@@ -114,6 +119,7 @@ main_window.config(menu=menubar)
 # load card images
 photo_player = game.load_card_images(player)
 photo_dealer = game.load_card_images(dealer)
+face_down_card = game.load_single_card_image(game.face_down_cards)
 
 
 # Create frames, windows
@@ -144,7 +150,7 @@ player_frame.pack(pady=20)
 
 dealer_total_frame = tk.Frame(dealer_frame, width=200, height=50, bg=background)
 dealer_total_frame.pack()
-dealerInt = tk.IntVar(dealer_total_frame, game.count_total(dealer))
+dealerInt = tk.IntVar(dealer_total_frame, game.count_total(dealer[1:]))
 dealer_label = tk.Label(dealer_total_frame, text="Total:", font=("Terminal", 15, "bold"), bg=background)
 dealer_label.pack(side="left")
 dealer_total = tk.Label(dealer_total_frame, textvariable=dealerInt, bg=background, font=("Terminal", 15, "bold"))
@@ -170,9 +176,15 @@ for img in photo_player:
     player_card_img = tk.Label(player_card_frame, image=img, bg=background)
     player_card_img.pack(side="left")
 
-for img in photo_dealer:
-    dealer_card_img = tk.Label(dealer_card_frame, image=img, bg=background)
-    dealer_card_img.pack(side="left", pady=5)
+# for img in photo_dealer:
+#     dealer_card_img = tk.Label(dealer_card_frame, image=img, bg=background)
+#     dealer_card_img.pack(side="left", pady=5)
+
+dealer_card_facedown = tk.Label(dealer_card_frame, image=photo_dealer[0], bg=background)
+dealer_card_facedown.pack(side="left", pady=5)
+dealer_card_facedown.configure(image=face_down_card)
+dealer_card_faceup = tk.Label(dealer_card_frame, image=photo_dealer[1], bg=background)
+dealer_card_faceup.pack(side="left")
 
 
 btn_frame = tk.Frame(main_window, width=200, height=50, bg=background)
