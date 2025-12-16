@@ -11,12 +11,8 @@ player = game.player_cards(deck)
 dealer = game.dealer_cards(deck)
 background = "#008000"
 
-wins = 0
-lose = 0
-Tie = 0
 
-
-def reset():
+def reset(event=None):
     global deck, player, dealer, photo_dealer, photo_player, face_down_card
     deck.clear()
     player.clear()
@@ -68,6 +64,7 @@ def check_player():
         return
     elif game.count_total(player) > 21:
         event_label.configure(text="Player busts! you lose.", foreground="red")
+        lose.set(lose.get() +1)
 
         hit_btn.configure(state="disabled")
         stay_btn.configure(state="disabled")
@@ -95,18 +92,22 @@ def player_stays():
 
     if game.count_total(dealer) > 21:
         event_label.configure(text="Dealer busts! (total > 21) you win!")
+        wins.set(wins.get() +1)
         play_win()
 
     elif game.count_total(dealer) <= 21 and game.count_total(dealer) > game.count_total(player):
         event_label.configure(text="The dealer wins! (dealer total > player total)")
+        lose.set(lose.get() +1)
         play_lose()
 
     elif game.count_total(dealer) == game.count_total(player):
         event_label.configure(text="It's a tie! (dealer total == player total)")
+        ties.set(ties.get() +1)
         play_tie()
 
     elif game.count_total(dealer) < game.count_total(player):
         event_label.configure(text="You win! (dealer total < player total)")
+        wins.set(wins.get() +1)
         play_win()
 
 print(f"Player's hand: {player}")
@@ -116,7 +117,7 @@ print(f"Dealer's hand: {dealer}")
 main_window = tk.Tk()
 main_window.option_add('*tearOff', False)
 main_window.title(string="Blackjack Windows 98 Edition")
-main_window.geometry("800x480")
+main_window.geometry("800x520")
 main_window.config(bg=background)
 main_window.resizable(width=None, height=None)
 
@@ -128,10 +129,11 @@ theme.theme_use("vista")
 menubar = tk.Menu(main_window)
 main_window['menu'] = menubar
 menu_file = tk.Menu(menubar)
-menu_file.add_command(label="New Game...", underline=1, command= lambda: [reset()])
+menu_file.add_command(label="New Game...", underline=1, accelerator="F2", command= lambda: [reset()])
 menubar.add_cascade(label="Game", menu=menu_file)
 main_window.config(menu=menubar)
 
+main_window.bind_all("<F2>", reset)
 
 # load card images
 photo_player = game.load_card_images(player)
@@ -155,12 +157,22 @@ dealer_card_frame = tk.Frame(dealer_frame, width=480, height=100, bg=background)
 dealer_card_frame.pack()
 
 # Keep track of the last action taken
-event_frame = tk.Frame(main_window, bg=background,)
-# event_text = tk.Text(event_frame, "It's the players turn. Hit or stay?")
+event_frame = tk.Frame(main_window, bg=background)
 event_label = tk.Label(event_frame, text="It's the players turn. Hit or stay?", bg=background, font=("MS Sans Serif", 10, "bold"))
 event_frame.pack()
 event_label.pack()
 
+# Keep track of score
+score_frame = tk.Frame(main_window,bg=background, height=20, width=100 )
+score_frame.pack()
+
+wins = tk.IntVar(score_frame, 0)
+lose = tk.IntVar(score_frame, 0)
+ties = tk.IntVar(score_frame, 0)
+
+wins_label = tk.Label(score_frame, textvariable=wins, bg=background, font=("MS Sans Serif", 10, "bold")).pack(side="left")
+lose_label = tk.Label(score_frame, textvariable=lose, bg=background, font=("MS Sans Serif", 10, "bold")).pack(side="left")
+ties_label = tk.Label(score_frame, textvariable=ties, bg=background, font=("MS Sans Serif", 10, "bold")).pack(side="left")
 
 player_frame = tk.LabelFrame(main_window, 
                              width=630, 
