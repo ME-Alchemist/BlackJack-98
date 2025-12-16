@@ -134,11 +134,11 @@ once the player "stays", the dealer
 reveals the face down card and counts
 the total in its hand
 ''' 
-def dealers_turn():
-    if count_total(dealer_hand) < 17:
-        print("dealer takes another card")
-    else:
-        print("dealer stays")
+# def dealers_turn():
+#     if count_total(dealer_hand) < 17:
+#         print("dealer takes another card")
+#     else:
+#         print("dealer stays")
 
 
 # count the total in either the player or the dealer's hand
