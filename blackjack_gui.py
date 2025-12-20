@@ -1,10 +1,7 @@
 import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
-import tkinter.ttk as ttk
 import blackjack as game
 import winsound as sfx
-import os
+# import os
 
 deck = game.generate_game()
 player = game.player_cards(deck)
@@ -35,15 +32,15 @@ def reset(event=None):
     hit_btn.configure(state="active")
     stay_btn.configure(state="active")
 
+    # meant for clearing the terminal when starting a new game
+    # not needed since print statements have been removed, but kept for reference
     # if os.name == 'nt':
     #     _ = os.system('cls') # for Windows
     # else:
     #     _ = os.system('clear') # for Linux/macOS
 
-    print(f"Player's hand: {player}")
-    print(f"Dealer's hand: {dealer}")
 
-
+# sound effects
 play_lose = lambda: sfx.PlaySound("resources/sounds/CHORD.wav", sfx.SND_ASYNC)
 play_win = lambda: sfx.PlaySound("resources/sounds/TADA.wav", sfx.SND_ASYNC)
 play_tie = lambda: sfx.PlaySound("resources/sounds/CHIMES.WAV", sfx.SND_ASYNC)
@@ -57,7 +54,6 @@ def check_player():
     photo_player.append(card_img)
     pack_card_img = tk.Label(player_card_frame, image=card_img, bg=background)
     pack_card_img.pack(side="left")  
-    print(f"Player's hand: {player}")
     playerInt.set(game.count_total(player))
 
     if game.count_total(player) < 21:
@@ -91,27 +87,24 @@ def player_stays():
         dealerInt.set(game.count_total(dealer))
 
     if game.count_total(dealer) > 21:
-        event_label.configure(text="Dealer busts! (total > 21) you win!")
+        event_label.configure(text="Dealer busts! (total > 21) you win!", foreground="cyan")
         wins.set(wins.get() +1)
         play_win()
 
     elif game.count_total(dealer) <= 21 and game.count_total(dealer) > game.count_total(player):
-        event_label.configure(text="The dealer wins! (dealer total > player total)")
+        event_label.configure(text="The dealer wins! (dealer total > player total)", foreground="red")
         lose.set(lose.get() +1)
         play_lose()
 
     elif game.count_total(dealer) == game.count_total(player):
-        event_label.configure(text="It's a tie! (dealer total == player total)")
+        event_label.configure(text="It's a tie! (dealer total == player total)", foreground="yellow")
         ties.set(ties.get() +1)
         play_tie()
 
     elif game.count_total(dealer) < game.count_total(player):
-        event_label.configure(text="You win! (dealer total < player total)")
+        event_label.configure(text="You win! (dealer total < player total)", foreground="cyan")
         wins.set(wins.get() +1)
         play_win()
-
-print(f"Player's hand: {player}")
-print(f"Dealer's hand: {dealer}")
 
 # main window with title and size
 main_window = tk.Tk()
@@ -120,10 +113,6 @@ main_window.title(string="Blackjack Windows 98 Edition")
 main_window.geometry("800x520")
 main_window.config(bg=background)
 main_window.resizable(width=None, height=None)
-
-theme = ttk.Style(master=main_window)
-print(theme.theme_names())
-theme.theme_use("vista")
 
 # A menu for the main window, to reset the game or exit
 menubar = tk.Menu(main_window)
@@ -170,9 +159,12 @@ wins = tk.IntVar(score_frame, 0)
 lose = tk.IntVar(score_frame, 0)
 ties = tk.IntVar(score_frame, 0)
 
-wins_label = tk.Label(score_frame, textvariable=wins, bg=background, font=("MS Sans Serif", 10, "bold")).pack(side="left")
-lose_label = tk.Label(score_frame, textvariable=lose, bg=background, font=("MS Sans Serif", 10, "bold")).pack(side="left")
-ties_label = tk.Label(score_frame, textvariable=ties, bg=background, font=("MS Sans Serif", 10, "bold")).pack(side="left")
+win_label = tk.Label(score_frame, text="Wins:", bg=background, font=("MS Sans Serif", 11, "bold"), foreground="cyan").pack(side="left")
+score_wins = tk.Label(score_frame, textvariable=wins, bg=background, font=("MS Sans Serif", 11, "bold"), foreground="cyan").pack(side="left")
+lose_label = tk.Label(score_frame, text="Loses:", bg=background, font=("MS Sans Serif", 11, "bold"), foreground="red").pack(side="left")
+score_lose = tk.Label(score_frame, textvariable=lose, bg=background, font=("MS Sans Serif", 11, "bold"), foreground="red").pack(side="left")
+tie_label = tk.Label(score_frame, text="Ties:", bg=background, font=("MS Sans Serif", 11, "bold"), foreground="yellow").pack(side="left")
+score_ties = tk.Label(score_frame, textvariable=ties, bg=background, font=("MS Sans Serif", 11, "bold"), foreground="yellow").pack(side="left")
 
 player_frame = tk.LabelFrame(main_window, 
                              width=630, 

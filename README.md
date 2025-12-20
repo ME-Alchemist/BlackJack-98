@@ -27,7 +27,7 @@ The menu has a new game option, it is also tied to the "F2" on the keyboard for 
 https://github.com/ME-Alchemist/BlackJack-98.git
 ```
 
-2.  Run it
+2.  Run it through the terminal
 
 ```
 python ./blackjack_gui.py
