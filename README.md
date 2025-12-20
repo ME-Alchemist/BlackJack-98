@@ -23,11 +23,15 @@ The menu has a new game option, it is also tied to the "F2" on the keyboard for 
 
 1.  Git clone it to your local repository
 
-    https://github.com/ME-Alchemist/BlackJack-98.git
+```
+https://github.com/ME-Alchemist/BlackJack-98.git
+```
 
 2.  Run it
 
-    python ./blackjack_gui.py
+```
+python ./blackjack_gui.py
+```
 
 ## Things left to do
 
