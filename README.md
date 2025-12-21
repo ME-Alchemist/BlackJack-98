@@ -22,23 +22,29 @@ The menu has a new game option, it is also tied to the "F2" key on the keyboard 
 
 ## Try it out yourself!
 
-1.  Clone it to your local repository
+1.  Clone it to your local repository, once done, navigate to directory:
 ```
-https://github.com/ME-Alchemist/BlackJack-98.git
-```
----
-2. Create a virtual environment
-```
-python -m venv venv
+git clone https://github.com/ME-Alchemist/BlackJack-98.git
+
+cd BlackJack-98
 ```
 ---
+
+2. Create a virtual environment:
+```
+py -m venv .venv
+```
+---
+
 4. Press `Ctrl + Shift + P`, choose `Python Select Interperter` and select your newly created virtual environment
 ---
+
 5. Install the required packages in requirements.txt
 ```
 pip install -r requirements.txt
 ```
 ---
+
 6.  Run it through the terminal
 ```
 python ./blackjack_gui.py
