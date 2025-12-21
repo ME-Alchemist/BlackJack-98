@@ -36,16 +36,16 @@ py -m venv .venv
 ```
 ---
 
-4. Press `Ctrl + Shift + P`, choose `Python Select Interperter` and select your newly created virtual environment
+3. Press `Ctrl + Shift + P`, choose `Python Select Interperter` and select your newly created virtual environment
 ---
 
-5. Install the required packages in requirements.txt
+4. Install the required packages in requirements.txt
 ```
 pip install -r requirements.txt
 ```
 ---
 
-6.  Run it through the terminal
+5.  Run it through the terminal
 ```
 python ./blackjack_gui.py
 ```
