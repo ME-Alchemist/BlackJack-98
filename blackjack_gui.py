@@ -8,6 +8,22 @@ player = game.player_cards(deck)
 dealer = game.dealer_cards(deck)
 background = "#008000"
 
+# main window with title and size
+main_window = tk.Tk()
+main_window.option_add('*tearOff', False)
+main_window.title(string="Blackjack Windows 98 Edition")
+main_window.geometry("800x520")
+main_window.config(bg=background)
+main_window.resizable(width=None, height=None)
+
+# A menu for the main window, to reset the game or exit
+menubar = tk.Menu(main_window)
+main_window['menu'] = menubar
+menu_file = tk.Menu(menubar)
+menu_file.add_command(label="New Game...", underline=1, accelerator="F2", command= lambda: [reset()])
+menubar.add_cascade(label="Game", menu=menu_file)
+main_window.config(menu=menubar)
+
 
 def reset(event=None):
     global deck, player, dealer, photo_dealer, photo_player, face_down_card
@@ -38,6 +54,8 @@ def reset(event=None):
     #     _ = os.system('cls') # for Windows
     # else:
     #     _ = os.system('clear') # for Linux/macOS
+
+main_window.bind_all("<F2>", reset)
 
 
 # sound effects
@@ -106,35 +124,19 @@ def player_stays():
         wins.set(wins.get() +1)
         play_win()
 
-# main window with title and size
-main_window = tk.Tk()
-main_window.option_add('*tearOff', False)
-main_window.title(string="Blackjack Windows 98 Edition")
-main_window.geometry("800x520")
-main_window.config(bg=background)
-main_window.resizable(width=None, height=None)
-
-# A menu for the main window, to reset the game or exit
-menubar = tk.Menu(main_window)
-main_window['menu'] = menubar
-menu_file = tk.Menu(menubar)
-menu_file.add_command(label="New Game...", underline=1, accelerator="F2", command= lambda: [reset()])
-menubar.add_cascade(label="Game", menu=menu_file)
-main_window.config(menu=menubar)
-
-main_window.bind_all("<F2>", reset)
 
 # load card images
 photo_player = game.load_card_images(player)
 photo_dealer = game.load_card_images(dealer)
 face_down_card = game.load_single_card_image(game.face_down_cards)
+hit_img, stand_img = game.load_assets()
 
 
 # Create frames, windows
 dealer_frame = tk.LabelFrame(main_window, 
                              width=630, 
                              height=160, 
-                             relief="sunken", 
+                            #  relief="sunken", 
                              borderwidth=2, 
                              bg=background, 
                              text="Dealer", 
@@ -232,12 +234,13 @@ def destroy_dealer():
     dealer_card_faceup.destroy()
 
 
-
-btn_frame = tk.Frame(main_window, width=200, height=50, bg=background)
+btn_frame = tk.Frame(main_window, width=200, height=5, bg=background)
 btn_frame.pack()
-hit_btn = tk.Button(btn_frame, text="Hit me!", relief="raised", command=check_player)
-hit_btn.pack(side="left", padx=10)
-stay_btn = tk.Button(btn_frame, text="Stay", relief="raised", command=player_stays)
-stay_btn.pack()
+# hit_label = tk.Label(btn_frame, image=hit_img, bg=background).pack(side="left", padx=5)
+hit_btn = tk.Button(btn_frame, text="   Hit me!", image=hit_img, compound="left", relief="raised", command=check_player)
+hit_btn.pack(side="left", padx=5)
+# stand_label = tk.Label(btn_frame, image=stand_img, bg=background).pack(side="left", padx=5)
+stay_btn = tk.Button(btn_frame, text="   Stand", image=stand_img, compound="left", relief="raised", command=player_stays)
+stay_btn.pack(side="left")
 
 main_window.mainloop()

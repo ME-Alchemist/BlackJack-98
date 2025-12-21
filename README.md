@@ -17,18 +17,30 @@ A Windows 98 inspired game of Blackjack! Made with Tkinter. Theme and design ins
 
 ## Controls
 
-The menu has a new game option, it is also tied to the "F2" on the keyboard for a quick and easy new game.
+Two buttons, one for "Hit" and one for "Stand".
+The menu has a new game option, it is also tied to the "F2" key on the keyboard for a quick and easy new game.
 
 ## Try it out yourself!
 
-1.  Git clone it to your local repository
-
+1.  Clone it to your local repository
 ```
 https://github.com/ME-Alchemist/BlackJack-98.git
 ```
 
-2.  Run it through the terminal
+2. Create a virtual environment
+```
+python -m venv venv
+```
 
+4. Press `Ctrl + Shift + P`, choose `Python Select Interperter` and select your newly created virtual environment
+
+
+5. Install the required packages in requirements.txt
+```
+pip install -r requirements.txt
+```
+
+6.  Run it through the terminal
 ```
 python ./blackjack_gui.py
 ```
@@ -43,7 +55,7 @@ python ./blackjack_gui.py
 - Add game reset functionality **`Done!`**
 - Utilize Fisher Yates Algorithm
 - Event tracking (whose turn is it/Progress) **`Done!`**
-- Add Win/lose counter **`Almost done`**
+- Add Win/lose counter **`Done!`**
 - Add tooltips
 - Additional logic for dealer and player **`Done!`**
-- Clean up code
+- Clean up code  **`Almost done`**

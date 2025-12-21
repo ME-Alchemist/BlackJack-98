@@ -1,10 +1,6 @@
 from PIL import Image, ImageTk
 import random as rand
 
-card1ls = [
-           {'Suit': '♥', 'value': 8, 'l': 0, 't': 0, 'r': 71, 'b': 96},
-           {'Suit': '♥', 'value': 8, 'l': 355, 't': 192, 'r': 426, 'b': 288}
-           ]
 
 random_int = rand.randint(1, 12)
 random_left = 71 * random_int
@@ -151,6 +147,16 @@ def count_total(hand):
         ace_count -= 1
                         
     return total
+
+def load_assets():
+    hit_img = Image.open("resources/images/hit.png")
+    hit_img = hit_img.resize((20, 25))
+    hit_photoimg = ImageTk.PhotoImage(hit_img)
+    stand_img = Image.open("resources/images/stand.png")
+    stand_img = stand_img.resize((20, 25))
+    stand_photoimg = ImageTk.PhotoImage(stand_img)
+
+    return hit_photoimg, stand_photoimg
 
 
 # For testing code
