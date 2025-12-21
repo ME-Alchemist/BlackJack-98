@@ -58,7 +58,6 @@ python ./blackjack_gui.py
 - Add sound effects **`Done!`**
 - Add appropriate sound library for sound control
 - Add game reset functionality **`Done!`**
-- Utilize Fisher Yates Algorithm
 - Event tracking (whose turn is it/Progress) **`Done!`**
 - Add Win/lose counter **`Done!`**
 - Add tooltips
